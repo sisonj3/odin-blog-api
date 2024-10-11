@@ -7,4 +7,13 @@ const userRouter = Router();
 // Create user
 userRouter.post("/create", userController.createUser);
 
-module.exports = fileRouter;
+// Read user
+userRouter.get("/read", userController.readUser);
+
+// Update user
+userRouter.put('/update', userController.updateUser);
+
+// Delete user
+userRouter.delete('/delete', userController.deleteUser);
+
+module.exports = userRouter;
