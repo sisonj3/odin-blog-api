@@ -10,6 +10,7 @@ const userRouter = require('./routes/userRouter');
 // Set up passport session
 
 // Used for req.body
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routers
