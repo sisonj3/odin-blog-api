@@ -9,12 +9,15 @@ async function getUsers() {
     return users;
 }
 
-// Get specific user with id
+// Get specific user with id with their profile
 async function getUserById(id) {
     const user = await prisma.user.findUnique({
         where: {
             id: id,
-        }
+        },
+        include: {
+            profile: true,
+        },
     });
 
     return user;
