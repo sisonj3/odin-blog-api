@@ -7,8 +7,11 @@ const userRouter = Router();
 // Create user
 userRouter.post("/create", userController.createUser);
 
-// Read user
+// Read users
 userRouter.get("/read", userController.readUser);
+
+// Read user with id
+userRouter.get("/read/:userId", userController.readUserById);
 
 // Update user
 userRouter.put('/update', userController.updateUser);

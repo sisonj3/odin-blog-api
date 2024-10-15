@@ -12,6 +12,12 @@ const readUser = async (req, res) => {
     return res.json(users);
 }
 
+const readUserById = async (req, res) => {
+    const user = await query.getUserById(Number(req.params.userId));
+
+    return res.json(user);
+}
+
 const updateUser = async (req, res) => {
     // Change body.id to params.id
     await query.updateUser(req.body.id, req.body.username, req.body.password);
@@ -27,6 +33,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
     createUser,
     readUser,
+    readUserById,
     updateUser,
     deleteUser,
 }
