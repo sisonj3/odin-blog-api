@@ -76,7 +76,11 @@ async function deleteUser(id) {
 
 // Read all posts
 async function readPosts() {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+        include: {
+            comments: true,
+        }
+    });
 
     return posts;
 }
@@ -87,6 +91,9 @@ async function readPostById(id) {
         where: {
             id: id,
         },
+        include: {
+            comments: true,
+        }
     });
 
     return post;

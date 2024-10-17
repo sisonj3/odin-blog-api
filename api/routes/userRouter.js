@@ -13,6 +13,9 @@ userRouter.get("/read", userController.readUser);
 // Read user with id
 userRouter.get("/read/:username", userController.readUserByUsername);
 
+// Read user profile
+userRouter.get("/read/:userId/profile", userController.readUserProfile);
+
 // Update user
 userRouter.put('/update', userController.updateUser);
 
