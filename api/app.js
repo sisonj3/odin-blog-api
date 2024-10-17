@@ -8,8 +8,11 @@ const app = express();
 const userRouter = require('./routes/userRouter');
 const postRouter = require('./routes/postRouter');
 const commentRouter = require('./routes/commentRouter');
+const loginRouter = require('./routes/loginRouter');
 
 // Set up passport session
+app.use(session({ secret: env("SECRET"), resave: false, saveUninitialized: false }));
+app.use(passport.session());
 
 // Used for req.body
 app.use(express.json());
@@ -20,5 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
+app.use("/login", loginRouter);
 
 app.listen(3000, () => console.log("App listening on port 3000!"));
