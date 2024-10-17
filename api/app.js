@@ -11,7 +11,7 @@ const commentRouter = require('./routes/commentRouter');
 const loginRouter = require('./routes/loginRouter');
 
 // Set up passport session
-app.use(session({ secret: env("SECRET"), resave: false, saveUninitialized: false }));
+app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.session());
 
 // Used for req.body

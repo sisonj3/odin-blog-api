@@ -1,10 +1,35 @@
 const query = require("../prisma/queries");
+const bcrypt = require("bcryptjs");
+const { body, validationResult } = require("express-validator");
 
-const createUser = async (req, res) => {
-    await query.createUser(req.body.username, req.body.password);
+// Validate user
+const validate = [
+    body("username").custom(async value => {
+        const user = await query.getUserByUsername(value);
+
+        if (user) {
+            throw new Error('Username already in use');
+        }
+    }),
+];
+
+const createUser = [validate, async (req, res) => {
+
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).send(errors.array());
+    }
+
+    // Bcrypt password
+    bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+        await query.createUser(req.body.username, hashedPassword);
+    });
+    
 
     return res.send('POST: Created User!');
-};
+}
+];
 
 const readUser = async (req, res) => {
     const users = await query.getUsers();
