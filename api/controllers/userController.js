@@ -50,14 +50,12 @@ const readUserProfile = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-    // Change body.id to params.id
-    await query.updateUser(req.body.id, req.body.username, req.body.password);
+    await query.updateUser(Number(req.params.userId), req.body.username, req.body.password);
     return res.send('PUT: Updated User!');
 }
 
 const deleteUser = async (req, res) => {
-    // Change body.id to params.id
-    await query.deleteUser(req.body.id);
+    await query.deleteUser(Number(req.params.userId));
     return res.send('DELETE: Deleted User!');
 }
 

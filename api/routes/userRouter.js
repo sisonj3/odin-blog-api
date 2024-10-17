@@ -17,9 +17,9 @@ userRouter.get("/read/:username", userController.readUserByUsername);
 userRouter.get("/read/:userId/profile", userController.readUserProfile);
 
 // Update user
-userRouter.put('/update', userController.updateUser);
+userRouter.put('/update/:userId', userController.updateUser);
 
 // Delete user
-userRouter.delete('/delete', userController.deleteUser);
+userRouter.delete('/delete/:userId', userController.deleteUser);
 
 module.exports = userRouter;
