@@ -11,7 +11,7 @@ userRouter.post("/create", userController.createUser);
 userRouter.get("/read", userController.readUser);
 
 // Read user with id
-userRouter.get("/read/:userId", userController.readUserById);
+userRouter.get("/read/:username", userController.readUserByUsername);
 
 // Update user
 userRouter.put('/update', userController.updateUser);

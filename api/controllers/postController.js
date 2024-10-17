@@ -1,26 +1,38 @@
-// Read all posts
-const readPosts = (req, res) => {
+const query = require('../prisma/queries');
 
+// Read all posts
+const readPosts = async (req, res) => {
+    const posts = await query.readPosts();
+
+    return res.json(posts);
 };
 
 // Read post by id
-const readPostById = (req, res) => {
+const readPostById = async (req, res) => {
+    const post = await query.readPostById(Number(req.params.postId));
 
+    return res.json(post);
 };
 
 // Create post
-const createPost = (req, res) => {
+const createPost = async (req, res) => {
+    await query.createPost(Number(req.params.profileId), req.body.title, req.body.text);
 
+    return res.send('POST: Created Post!');
 };
 
 // Update post
-const updatePost = (req, res) => {
+const updatePost = async (req, res) => {
+    await query.updatePost(Number(req.params.postId), req.body.title, req.body.text);
 
+    return res.send('PUT: Updated Post!');
 };
 
 // Delete post
-const deletePost = (req, res) => {
+const deletePost = async (req, res) => {
+    await query.deletePost(Number(req.params.postId));
 
+    return res.send('DELETE: Deleted Post!');
 };
 
 module.exports = {
