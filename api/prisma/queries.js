@@ -61,10 +61,26 @@ async function updateUser(id, name, pass) {
 
 // Delete user with profile
 async function deleteUser(id) {
+
+    // Disconnect posts and comments
+    await prisma.profile.update({
+        where: {
+            userId: id,
+        },
+        data: {
+            posts: {
+                set: [],
+            },
+            comments: {
+                set: [],
+            },
+        }
+    });
+
     await prisma.profile.delete({
         where: {
             userId: id,
-        }
+        },
     });
 
     await prisma.user.delete({

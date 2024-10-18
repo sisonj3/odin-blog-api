@@ -32,16 +32,16 @@ model Post {
   id Int @id @default(autoincrement())
   title String @db.VarChar(255)
   text String @db.VarChar(255)
-  author Profile @relation(fields: [authorId], references: [id])
-  authorId Int
+  author Profile? @relation(fields: [authorId], references: [id])
+  authorId Int?
   comments Comment[]
 }
 
 model Comment {
   id Int @id @default(autoincrement())
   text String @db.VarChar(255)
-  author Profile @relation(fields: [authorId], references: [id])
-  authorId Int
+  author Profile? @relation(fields: [authorId], references: [id])
+  authorId Int?
   post Post @relation(fields: [postId], references: [id])
   postId Int
 }
