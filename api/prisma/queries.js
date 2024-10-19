@@ -9,7 +9,7 @@ async function getUsers() {
     return users;
 }
 
-// Get specific user with id with their profile
+// Get specific user with username with their profile
 async function getUserByUsername(name) {
     const user = await prisma.user.findUnique({
         where: {
@@ -18,6 +18,20 @@ async function getUserByUsername(name) {
         include: {
             profile: true,
         }
+    });
+
+    return user;
+}
+
+// Get specific use with id with their profile
+async function getUserById(id) {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: id,
+        },
+        include: {
+            profile: true,
+        },
     });
 
     return user;
@@ -238,6 +252,7 @@ async function readProfile(userId) {
 module.exports = {
     getUsers,
     getUserByUsername,
+    getUserById,
     createUser,
     updateUser,
     deleteUser,
