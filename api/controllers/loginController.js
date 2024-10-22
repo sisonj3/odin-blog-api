@@ -2,6 +2,8 @@ const query = require("../prisma/queries");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv").config();
 
 const checkUser = (req, res) => {
     if (req.user) {
@@ -61,13 +63,45 @@ const loginUser = passport.authenticate("local", {
 });
 
 const getJWT = (req, res) => {
-    // Get user back
+    // Get user back w/ req.user
+    console.log(req.user);
 
     // Get jsonwebtoken
+    jwt.sign({ user: req.user }, process.env.SECRET, (err, token) => {
+        res.json({
+            token: token,
+        });
+    });
+};
+
+const verifyToken = (req, res, next) => {
+    // Get auth header value
+    const bearerHeader = req.headers['authorization'];
+
+    // Check if bearer is undefined
+    if (bearerHeader) {
+        
+        const bearer = bearerHeader.split(' ');
+
+        // Get token from array
+        const bearerToken = bearer[1];
+
+        // Set the token
+        req.token = bearerToken;
+
+        // Next middleware
+        next();
+
+    } else {
+        // Forbidden
+        res.sendStatus(403);
+    };
 };
 
 
 module.exports = {
     checkUser,
     loginUser,
+    getJWT,
+    verifyToken,
 }

@@ -1,6 +1,8 @@
 const query = require("../prisma/queries");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
+const jwt = require('jsonwebtoken');
+const dotenv = require("dotenv").config();
 
 // Validate user
 const validate = [
@@ -38,9 +40,18 @@ const readUser = async (req, res) => {
 }
 
 const readUserByUsername = async (req, res) => {
+
     const user = await query.getUserByUsername(req.params.username);
 
-    return res.json(user);
+    jwt.verify(req.token, process.env.SECRET, (err, authData) => {
+        if (err) {
+            res.sendStatus(403);
+        } else {
+            return res.json(user);
+        }
+    });
+
+    
 }
 
 const readUserProfile = async (req, res) => {

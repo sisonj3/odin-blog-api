@@ -4,8 +4,6 @@ const { Router } = require("express");
 
 const loginRouter = Router();
 
-loginRouter.get("/", loginController.checkUser);
-
-loginRouter.post("/", [loginController.loginUser, loginController.checkUser]);
+loginRouter.post("/", [loginController.loginUser, loginController.getJWT]);
 
 module.exports = loginRouter;

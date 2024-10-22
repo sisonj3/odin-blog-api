@@ -1,4 +1,5 @@
 const userController = require('../controllers/userController');
+const loginController = require("../controllers/loginController");
 
 const { Router } = require('express');
 
@@ -11,7 +12,7 @@ userRouter.post("/create", userController.createUser);
 userRouter.get("/read", userController.readUser);
 
 // Read user with id
-userRouter.get("/read/:username", userController.readUserByUsername);
+userRouter.get("/read/:username", [loginController.verifyToken, userController.readUserByUsername]);
 
 // Read user profile
 userRouter.get("/read/:userId/profile", userController.readUserProfile);
