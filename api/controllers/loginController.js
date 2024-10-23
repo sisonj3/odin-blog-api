@@ -67,7 +67,7 @@ const getJWT = (req, res) => {
     console.log(req.user);
 
     // Get jsonwebtoken
-    jwt.sign({ user: req.user }, process.env.SECRET, (err, token) => {
+    jwt.sign({ user: req.user }, process.env.SECRET, { expiresIn: '12h'}, (err, token) => {
         res.json({
             token: token,
         });

@@ -36,7 +36,13 @@ const createUser = [validate, async (req, res) => {
 const readUser = async (req, res) => {
     const users = await query.getUsers();
 
-    return res.json(users);
+    jwt.verify(req.token, process.env.SECRET, (err, authData) => {
+        if (err) {
+            res.sendStatus(403);
+        } else {
+            return res.json(users);
+        }
+    });
 }
 
 const readUserByUsername = async (req, res) => {
@@ -57,17 +63,37 @@ const readUserByUsername = async (req, res) => {
 const readUserProfile = async (req, res) => {
     const profile = await query.readProfile(Number(req.params.userId));
 
-    return res.json(profile);
+    jwt.verify(req.token, process.env.SECRET, (err, authData) => {
+        if (err) {
+            res.sendStatus(403);
+        } else {
+            return res.json(profile);
+        }
+    });
 };
 
 const updateUser = async (req, res) => {
     await query.updateUser(Number(req.params.userId), req.body.username, req.body.password);
-    return res.send('PUT: Updated User!');
+    
+    jwt.verify(req.token, process.env.SECRET, (err, authData) => {
+        if (err) {
+            res.sendStatus(403);
+        } else {
+            return res.send('PUT: Updated User!');
+        }
+    });
 }
 
 const deleteUser = async (req, res) => {
     await query.deleteUser(Number(req.params.userId));
-    return res.send('DELETE: Deleted User!');
+
+    jwt.verify(req.token, process.env.SECRET, (err, authData) => {
+        if (err) {
+            res.sendStatus(403);
+        } else {
+            return res.send('DELETE: Deleted User!');
+        }
+    });
 }
 
 module.exports = {

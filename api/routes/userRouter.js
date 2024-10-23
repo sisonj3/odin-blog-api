@@ -9,18 +9,18 @@ const userRouter = Router();
 userRouter.post("/create", userController.createUser);
 
 // Read users
-userRouter.get("/read", userController.readUser);
+userRouter.get("/read", [loginController.verifyToken, userController.readUser]);
 
 // Read user with id
 userRouter.get("/read/:username", [loginController.verifyToken, userController.readUserByUsername]);
 
 // Read user profile
-userRouter.get("/read/:userId/profile", userController.readUserProfile);
+userRouter.get("/read/:userId/profile", [loginController.verifyToken, userController.readUserProfile]);
 
 // Update user
-userRouter.put('/update/:userId', userController.updateUser);
+userRouter.put('/update/:userId', [loginController.verifyToken, userController.updateUser]);
 
 // Delete user
-userRouter.delete('/delete/:userId', userController.deleteUser);
+userRouter.delete('/delete/:userId', [loginController.verifyToken, userController.deleteUser]);
 
 module.exports = userRouter;
