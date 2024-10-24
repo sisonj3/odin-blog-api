@@ -12,7 +12,7 @@ const renderLogin = (req, res) => {
             res.render("login");
         }
     } else {
-        console.log("A user is already logged in!");
+        res.send(`${req.user.username} is already logged in with token: ${req.user.token}!`);
     }
 };
 
@@ -50,14 +50,33 @@ passport.use(new LocalStrategy({ passReqToCallback: true }, async (req, username
 // Serialization and Deserialization
 passport.serializeUser((user, done) => {
     console.log("Serializing User...");
-    console.log(user);
-    done(null, user.token);
+    done(null, user);
 });
 
-passport.deserializeUser(async (token, done) => {
+passport.deserializeUser(async (user, done) => {
     console.log("Deserializing User...");
-    console.log(token);
+
     // Get user
+    fetch(`http://localhost:3000/user/read/${user.username}`, {
+        mode: 'cors',
+        method: 'GET',
+        headers: {
+            'authorization': `Bearer ${user.token}`
+        },
+
+    })
+        .then(response => response.json())
+        .then(data => {
+            done(null, {
+                id: data.id,
+                username: data.username,
+                token: user.token,
+            });
+        })
+        .catch(error => {
+            console.error(error);
+            done(error);
+        });
 })
 
 const loginUser = passport.authenticate("local", {
