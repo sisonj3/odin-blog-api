@@ -70,6 +70,7 @@ const getJWT = (req, res) => {
     jwt.sign({ user: req.user }, process.env.SECRET, { expiresIn: '12h'}, (err, token) => {
         res.json({
             token: token,
+            username: req.user.username,
         });
     });
 };
