@@ -70,6 +70,7 @@ passport.deserializeUser(async (user, done) => {
             done(null, {
                 id: data.id,
                 username: data.username,
+                profile: data.profile,
                 token: user.token,
             });
         })
@@ -80,7 +81,7 @@ passport.deserializeUser(async (user, done) => {
 })
 
 const loginUser = passport.authenticate("local", {
-    successRedirect: "/login",
+    successRedirect: "/posts",
     failureMessage: true,
 });
 

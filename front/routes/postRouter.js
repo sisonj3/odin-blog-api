@@ -7,4 +7,7 @@ const postRouter = Router();
 // Render posts page
 postRouter.get("/", postController.renderPosts);
 
+// Render create post page
+postRouter.get("/create", postController.renderCreatePost);
+
 module.exports = postRouter;

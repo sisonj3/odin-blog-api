@@ -21,7 +21,7 @@ const renderPosts = (req, res) => {
 
 const renderCreatePost = (req, res) => {
     if (req.user) {
-        
+        res.render('createPost');
     } else {
         res.redirect("/login");
     }
@@ -29,4 +29,5 @@ const renderCreatePost = (req, res) => {
 
 module.exports = {
     renderPosts,
+    renderCreatePost,
 }

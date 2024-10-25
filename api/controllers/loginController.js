@@ -71,6 +71,7 @@ const getJWT = (req, res) => {
         res.json({
             token: token,
             username: req.user.username,
+            profile: req.user.profile,
         });
     });
 };
