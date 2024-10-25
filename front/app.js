@@ -7,6 +7,7 @@ const app = express();
 
 // Routes
 const loginRouter = require("./routes/loginRouter");
+const postRouter = require("./routes/postRouter");
 
 // Set up ejs
 app.set("views", path.join(__dirname, "views"));
@@ -21,5 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routers
 app.use("/login", loginRouter);
+app.use("/posts", postRouter);
 
 app.listen(4000, () => console.log("App listening on port 4000!"));

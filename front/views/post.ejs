@@ -1,0 +1,33 @@
+<html>
+    <body>
+        <h1>Posts</h1>
+
+        <% if (locals.posts) { %>
+
+            <ul>
+
+                <% posts.forEach((post) => { %>
+
+                    <li>
+                        <h2><%= post.title %></h2>
+
+                        <p><%= post.text %></p>
+                    </li>
+
+                    <ul>
+
+                        <% post.comments.forEach((comment) => { %>
+                            <li>
+                                <%= comment.text %>
+                            </li>
+                        <% }); %>
+
+                    </ul>
+
+                <% }); %>
+
+            </ul>
+
+        <% } %>
+    </body>
+</html>

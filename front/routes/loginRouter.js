@@ -8,6 +8,6 @@ const loginRouter = Router();
 loginRouter.get("/", loginController.renderLogin);
 
 // Log in user
-loginRouter.post("/", [loginController.loginUser, (req, res) => {console.log(req.user)}]);
+loginRouter.post("/", loginController.loginUser);
 
 module.exports = loginRouter;
