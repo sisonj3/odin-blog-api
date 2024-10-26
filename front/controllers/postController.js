@@ -25,9 +25,31 @@ const renderCreatePost = (req, res) => {
     } else {
         res.redirect("/login");
     }
-}
+};
+
+const createPost = (req, res) => {
+    console.log(req.user);
+
+    fetch(`http://localhost:3000/post/create/${req.user.profile.id}`, {
+        mode: 'cors',
+        method: 'POST',
+        headers: {
+            'authorization': `Bearer ${req.user.token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            title: req.body.title,
+            text: req.body.text,
+        }),
+    })
+        .then(response => {
+            res.redirect("/posts");
+        })
+        .catch(error => console.error(error));
+};
 
 module.exports = {
     renderPosts,
     renderCreatePost,
+    createPost,
 }
